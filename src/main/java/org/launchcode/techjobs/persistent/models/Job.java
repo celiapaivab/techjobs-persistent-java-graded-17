@@ -1,29 +1,35 @@
 package org.launchcode.techjobs.persistent.models;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 public class Job extends AbstractEntity {
 
     @ManyToOne
+    @NotNull(message = "Employer is required")
     private Employer employer;
 
-    private String skills;
+    @ManyToMany
+    @JoinTable(
+            name = "job_skills",
+            joinColumns = @JoinColumn(name = "job_id"),
+            inverseJoinColumns = @JoinColumn(name = "skills_id")
+    )
+    private List<Skill> skills = new ArrayList<>();
 
 
     public Job() {
     }
 
     // Initialize the id and value fields.
-    public Job(String name, String skills) {
-        super();
+    public Job(Employer employer, List<Skill> skills) {
+        this.employer = employer;
         this.skills = skills;
     }
 
@@ -37,12 +43,11 @@ public class Job extends AbstractEntity {
         this.employer = employer;
     }
 
-    public String getSkills() {
+    public List<Skill> getSkills() {
         return skills;
     }
 
-    public void setSkills(String skills) {
+    public void setSkills(List<Skill> skills) {
         this.skills = skills;
     }
-
 }
