@@ -16,11 +16,11 @@ public class Job extends AbstractEntity {
     private Employer employer;
 
     @ManyToMany
-    @JoinTable(
-            name = "job_skills",
-            joinColumns = @JoinColumn(name = "job_id"),
-            inverseJoinColumns = @JoinColumn(name = "skills_id")
-    )
+//    @JoinTable(
+//            name = "job_skills",
+//            joinColumns = @JoinColumn(name = "job_id"),
+//            inverseJoinColumns = @JoinColumn(name = "skills_id")
+//    )
     private List<Skill> skills = new ArrayList<>();
 
 
